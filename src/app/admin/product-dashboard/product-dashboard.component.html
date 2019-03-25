@@ -1,0 +1,100 @@
+<div id="navbar">
+  <app-navbar></app-navbar>
+</div>
+<div class="sidebar sticky">
+    <ul>
+      <li>
+        <button type="button" class="btn btn-primary actionButton" data-toggle="modal" (click)="prepareAdd()" data-target="#addProductModal">
+          Add Product
+      </button>
+      </li>
+    </ul>
+</div>
+  
+<div class="main">
+<div class="container">
+        <div (click)="select(product)" [class.selected]="product === selectedProduct" class="card float-left product"  style="width: 18rem;" *ngFor="let product of product">
+                <img src="{{product.imgLink}}" class="card-img-top cardImg" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{product.productName}}</h5>
+                  <p class="card-text">{{product.productPrice}}$</p>
+                  <button type="button" class="btn btn-primary actionButton" data-toggle="modal" (click)="prepareEdit(product)" data-target="#addProductModal">
+                    Edit
+                </button>
+                  <button type="button" class="btn btn-danger actionButton" (click)=delete(product)>Delete</button>
+                </div>
+        </div>
+</div>
+</div>
+
+<!-- add product Modal -->
+<div *ngIf="modal" class="modal fade" data-backdrop="false" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addProductModalTitle">{{text}} Product</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="productForm" (ngSubmit)="onAdd()">
+                    <input hidden formControlName="_id" type="text" class="form-control" placeholder="Enter image link">
+
+                    <div class="form-group">
+                      <label>Product Image Link</label>
+                      <input required minlength="1" formControlName="imgLink" type="text" class="form-control" placeholder="Enter image link">
+                    </div>
+                    <div class="form-group">
+                      <label>Product Name</label>
+                      <input required minlength="2" formControlName="productName" type="text" class="form-control" placeholder="Enter Product Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Product Price</label>
+                        <input required minlength="1" formControlName="productPrice" type="number" class="form-control" placeholder="Enter Product Price">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" [disabled]="!productForm.valid" class="btn btn-primary">{{text}} Product</button>
+                      </div>
+                  </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+<!-- edit product Modal 
+<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editTitle">Edit Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #productEditForm="ngForm" (ngSubmit)="onEdit()">
+                <div class="form-group">
+                  <label>Product Image Link</label>
+                  <input [(ngModel)]="selectedProduct.imgLink" name="imgLink" required minlength="10" type="text" class="form-control" placeholder="Enter image link">
+                </div>
+                <div class="form-group">
+                  <label>Product Name</label>
+                  <input disabled [(ngModel)]="selectedProduct.productName" name="name" required minlength="5" type="text" class="form-control" placeholder="Enter Product Name">
+                </div>
+                <div class="form-group">
+                    <label>Product Price</label>
+                    <input [(ngModel)]="selectedProduct.productPrice" name="price" required minlength="2" type="number" class="form-control" placeholder="Enter Product Price">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Edit Product</button>
+                </div>
+              </form>
+        </div>
+
+      </div>
+    </div>
+  </div>-->
+
